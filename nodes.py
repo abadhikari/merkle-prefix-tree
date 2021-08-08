@@ -1,6 +1,3 @@
-from utils import json_serialize
-
-
 class TreeNode:
     def __init__(self):
         self.left = None
@@ -15,11 +12,11 @@ class InteriorNode(TreeNode):
 
 
 class DataNode(TreeNode):
-    def __init__(self, data, hash_func):
+    def __init__(self, data, hash_func, serialize_func):
         TreeNode.__init__(self)
         self.data = data
-        self._hash_data(hash_func)
+        self._hash_data(hash_func, serialize_func)
 
-    def _hash_data(self, hash_func):
-        serialized_data = json_serialize(self.data)
+    def _hash_data(self, hash_func, serialize_func):
+        serialized_data = serialize_func(self.data)
         self.hash = hash_func(serialized_data)
