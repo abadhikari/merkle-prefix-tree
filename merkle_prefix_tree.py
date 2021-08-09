@@ -6,32 +6,32 @@ This module contains a Merkle Prefix Tree, a variation of the traditional
 Merkle Tree. 
 
 Properties of a Merkle Prefix Tree:
-1) The height of a Merkle Prefix Tree is fixed from when it is first created
-2) When an element is appended to the tree, a prefix is needed to specify 
-the path where the element will be appended as a leaf DataNode
-3) Prefixes are strings that only contain either a 0 or 1 character. A 0 corresponds
-to a left subtree and a 1 corresponds to a right subtree
-4) The length of a prefix must be equivalent to the height of the tree  
-5) When appending an element to the tree, InteriorNodes are created as 
-needed until the height of the tree is reached and the leaf DataNode
-is appended
-6) Since InteriorNodes are added only as needed, large amounts of the tree
-will contain EmptyNodes. These EmptyNodes are purely conceptual, meaning there
-aren't concrete nodes that are created for EmptyNodes. To do hash calculations with 
-EmptyNodes, the _empty_tree_hash_dict dictionary is used. This contains
-precomputed hash values of the EmptyNodes at the various levels of the tree 
-from the root to the height of the tree based on an empty tree. 
+    1) The height of a Merkle Prefix Tree is fixed from when it is first created
+    2) When an element is appended to the tree, a prefix is needed to specify 
+    the path where the element will be appended as a leaf DataNode
+    3) Prefixes are strings that only contain either a 0 or 1 character. A 0 corresponds
+    to a left subtree and a 1 corresponds to a right subtree
+    4) The length of a prefix must be equivalent to the height of the tree  
+    5) When appending an element to the tree, InteriorNodes are created as 
+    needed until the height of the tree is reached and the leaf DataNode
+    is appended
+    6) Since InteriorNodes are added only as needed, large amounts of the tree
+    will contain EmptyNodes. These EmptyNodes are purely conceptual, meaning there
+    aren't concrete nodes that are created for EmptyNodes. To do hash calculations with 
+    EmptyNodes, the _empty_tree_hash_dict dictionary is used. This contains
+    precomputed hash values of the EmptyNodes at the various levels of the tree 
+    from the root to the height of the tree based on an empty tree. 
 
 There are three types of nodes within the tree:
-1) InteriorNode
-    a) Hash Equation: hinterior = H(hchild.0 || hchild.1)
-    b) Only created when leaf DataNodes are being appended
-2) DataNode
-    a) Hash Equation: hdata = H(data)
-    b) Leaf nodes that will always have a depth of the height of the tree
-3) EmptyNode
-    a) Hash Equation: hempty = H(kempty)
-    b) Conceptual nodes that will compose most of the tree
+    1) InteriorNode
+        a) Hash Equation: hinterior = H(hchild.0 || hchild.1)
+        b) Only created when leaf DataNodes are being appended
+    2) DataNode
+        a) Hash Equation: hdata = H(data)
+        b) Leaf nodes that will always have a depth of the height of the tree
+    3) EmptyNode
+        a) Hash Equation: hempty = H(kempty)
+        b) Conceptual nodes that will compose most of the tree
 """
 
 
