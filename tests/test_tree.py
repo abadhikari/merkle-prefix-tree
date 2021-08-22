@@ -9,8 +9,7 @@ within each test method below.
 
 import pytest
 
-from merkle_prefix_tree import MerklePrefixTree
-from exceptions import AppendOnlyError
+from merkle_prefix_tree import MerklePrefixTree, AppendOnlyError
 
 
 class TestMerklePrefixTree:

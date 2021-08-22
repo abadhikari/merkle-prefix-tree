@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import hashlib
 import json
 
@@ -20,7 +23,7 @@ def default_hash_func(to_hash):
     return digest
 
 def json_serialize(to_serialize):
-    return json.dumps(to_serialize) if not isinstance(to_serialize, str) else to_serialize
+    return json.dumps(to_serialize, default=lambda obj: obj.__dict__) if not isinstance(to_serialize, str) else to_serialize
 
 class RandObj:
     def __init__(self, data):
@@ -36,18 +39,19 @@ class TestObj:
             lst.append(RandObj(i))
         return lst
 
-
 if __name__ == '__main__':
-    m = MerklePrefixTree(4, default_hash_func, json_serialize)
+    m = MerklePrefixTree(4, False, default_hash_func, json_serialize)
+    print(type(m.get_root_hash()))
     prefix = '0001'
-    m.append(prefix, 3)
+    obj = TestObj()
+    m.append(prefix, obj)
     poi = m.produce_inclusion_proof(prefix)
     data_node = m.get_data_node(prefix)
-    m.print_tree()
+    m.pretty_print()
+    path_lst = m.get_prefix_path_lst(prefix)
+    for node in path_lst:
+        print(node)
 
     # TODO make sure to add a serialize_func that can serialize deep objects
     #t = TestObj()
     #print(json_serialize(t))
-
-
-

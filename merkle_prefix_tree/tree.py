@@ -40,8 +40,8 @@ There are three types of nodes within the tree:
 import json
 import hashlib
 
-from nodes import InteriorNode, DataNode
-from exceptions import AppendOnlyError
+from .nodes import InteriorNode, DataNode
+from .exceptions import AppendOnlyError
 
 
 class MerklePrefixTree:
@@ -248,7 +248,7 @@ class MerklePrefixTree:
             # Using left and right node hash, recompute the hash of curr_node
             left_hash = curr_node.left.hash if curr_node.left else empty_hash
             right_hash = curr_node.right.hash if curr_node.right else empty_hash
-            curr_node.hash = self.hash_hashes(left_hash,
+            curr_node.hash = self._hash_hashes(left_hash,
                                               right_hash,
                                               self._hash_func)
 
@@ -330,7 +330,7 @@ class MerklePrefixTree:
             bit = prefix[i]
             left_hash = calculated_hash if bit == '0' else inclusion_proof[i]
             right_hash = calculated_hash if bit == '1' else inclusion_proof[i]
-            calculated_hash = self.hash_hashes(left_hash,
+            calculated_hash = self._hash_hashes(left_hash,
                                           right_hash,
                                           self._hash_func)
         return calculated_hash == root_hash
@@ -405,8 +405,8 @@ class MerklePrefixTree:
         """Return if MerklePrefixTree is append_only or not."""
         return self._append_only
 
-    @staticmethod
-    def hash_hashes(hash_1,
+    def _hash_hashes(self,
+                    hash_1,
                     hash_2,
                     hash_func):
         """Concat two given hashes and hash the result using the hash_func.
